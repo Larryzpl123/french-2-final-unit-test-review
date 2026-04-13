@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>French 2 — Final Review</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0f1117;--surface:#181b24;--surfaceAlt:#1e2230;--border:#2a2e3d;
+  --text:#e8e6e3;--muted:#9b97a0;--accent:#5c7cfa;--accentDim:#3b5bdb;
+  --accentGlow:rgba(92,124,250,.15);--green:#40c057;--greenDim:rgba(64,192,87,.12);
+  --red:#fa5252;--redDim:rgba(250,82,82,.12);--gold:#fab005;--goldDim:rgba(250,176,5,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans','Segoe UI',sans-serif;min-height:100vh}
+.header{padding:32px 24px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--accentGlow) 0%,transparent 100%)}
+.header-inner{max-width:900px;margin:0 auto}
+.header-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.header h1{font-family:'DM Serif Display',serif;font-size:28px;background:linear-gradient(135deg,var(--accent),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.header p{color:var(--muted);font-size:13px}
+.tab-bar{border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:20}
+.tab-bar-inner{max-width:900px;margin:0 auto;display:flex;overflow-x:auto;padding:0 16px}
+.tab-btn{padding:12px 18px;border:none;background:transparent;color:var(--muted);font-weight:500;font-size:13px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;font-family:inherit}
+.tab-btn.active{color:var(--accent);font-weight:700;border-bottom-color:var(--accent)}
+.content{max-width:900px;margin:0 auto;padding:24px 20px 64px}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* Shared */
+.badge{display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);background:rgba(92,124,250,.13)}
+.section{margin-bottom:32px}
+.section h3{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:12px;border-bottom:2px solid var(--accent);padding-bottom:6px;display:inline-block}
+.section .body{line-height:1.75;font-size:14px}
+.tip{padding:12px 16px;border-radius:10px;background:var(--goldDim);border:1px solid rgba(250,176,5,.2);margin:10px 0;font-size:13px;color:var(--gold);display:flex;gap:8px;align-items:flex-start}
+
+/* Conj table */
+.conj-card{background:var(--surface);border-radius:12px;border:1px solid var(--border);overflow:hidden;min-width:240px;display:inline-block;vertical-align:top}
+.conj-header{padding:10px 16px;background:var(--accentGlow);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.conj-header .verb{font-weight:700;font-family:'DM Serif Display',serif;font-size:17px}
+.conj-card table{width:100%;border-collapse:collapse}
+.conj-card td{padding:7px 16px;font-size:14px}
+.conj-card td:first-child{color:var(--muted);font-size:13px;width:90px;font-family:monospace}
+.conj-card td:last-child{font-weight:600}
+.conj-card tr:not(:last-child){border-bottom:1px solid var(--border)}
+.conj-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px}
+
+/* Overview table */
+.overview-wrap{border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--surface)}
+.overview-wrap table{width:100%;border-collapse:collapse;font-size:14px}
+.overview-wrap th{padding:10px 14px;text-align:left;color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);background:var(--surfaceAlt)}
+.overview-wrap td{padding:10px 14px}
+.overview-wrap tr:not(:last-child) td{border-bottom:1px solid var(--border)}
+.ov-tense{font-weight:700;font-size:13px}
+.ov-desc{font-size:10px;color:var(--muted);margin-top:2px}
+.hl-verb{color:var(--accent);font-weight:700}
+.hl-subj{color:var(--muted)}
+
+.cheat{margin-top:14px;padding:14px 18px;border-radius:12px;background:var(--accentGlow);border:1px solid rgba(92,124,250,.2);font-size:13px;line-height:1.8}
+.cheat .title{font-weight:700;margin-bottom:4px;color:var(--accent)}
+.cheat code{font-family:monospace;color:var(--accent)}
+
+/* Body grid */
+.body-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-top:8px}
+.body-item{padding:8px 14px;background:var(--surfaceAlt);border-radius:8px;border:1px solid var(--border);display:flex;justify-content:space-between;font-size:13px}
+.body-item .fr{font-weight:600}.body-item .en{color:var(--muted)}
+
+/* Flashcards */
+.fc-center{max-width:500px;margin:0 auto}
+.fc-modes{display:flex;gap:8px;margin-bottom:20px;justify-content:center}
+.fc-mode-btn{padding:8px 20px;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-weight:600;font-size:13px;transition:all .2s;font-family:inherit}
+.fc-mode-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.fc-info{display:flex;justify-content:space-between;margin-bottom:12px;font-size:13px;color:var(--muted)}
+.fc-card{background:var(--surface);border-radius:16px;border:1px solid var(--border);min-height:220px;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;padding:32px;transition:all .2s;user-select:none}
+.fc-card.flipped{box-shadow:0 0 30px var(--accentGlow)}
+.fc-label{font-size:12px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
+.fc-text{font-weight:700;text-align:center;white-space:pre-line;font-family:'DM Serif Display',serif}
+.fc-actions{display:flex;gap:12px;margin-top:16px;justify-content:center}
+.fc-wrong,.fc-right{flex:1;max-width:180px;padding:12px 0;border-radius:10px;border:none;font-weight:700;cursor:pointer;font-size:14px;font-family:inherit}
+.fc-wrong{background:var(--redDim);color:var(--red)}.fc-right{background:var(--greenDim);color:var(--green)}
+.fc-done{text-align:center;padding:48px;background:var(--surface);border-radius:16px;border:1px solid var(--border)}
+.fc-restart{padding:10px 28px;border-radius:99px;border:none;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;font-size:14px;font-family:inherit}
+
+/* Practice / Test */
+.q-card{margin-bottom:16px;padding:16px;border-radius:12px;background:var(--surface);border:1px solid var(--border)}
+.q-card.correct-border{border-color:rgba(64,192,87,.33)}.q-card.wrong-border{border-color:rgba(250,82,82,.33)}
+.q-prompt{font-size:14px;margin-bottom:10px;font-weight:500}
+.q-num{color:var(--muted);margin-right:8px}
+.q-input-row{display:flex;gap:8px}
+.q-input{flex:1;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surfaceAlt);color:var(--text);font-size:14px;outline:none;font-family:inherit}
+.q-check-btn{padding:8px 16px;border-radius:8px;border:none;background:var(--accent);color:#fff;cursor:pointer;font-weight:600;font-size:13px;font-family:inherit}
+.mc-options{display:flex;gap:8px;flex-wrap:wrap}
+.mc-btn{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;font-family:inherit;transition:all .15s}
+.mc-btn.selected{border-color:var(--accent);background:var(--accentGlow)}
+.mc-btn.right{border-color:var(--green);background:var(--greenDim)}
+.mc-btn.wrong-sel{border-color:var(--red);background:var(--redDim)}
+.q-correct{margin-top:8px;font-size:13px;color:var(--green)}.q-wrong{margin-top:8px;font-size:13px;color:var(--red)}
+.q-answer{color:var(--green);font-weight:700}
+.top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.regen-btn{padding:6px 16px;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:12px;font-family:inherit}
+
+/* Mock test */
+.test-start{text-align:center;padding:48px}
+.test-start-btn{padding:14px 40px;border-radius:99px;border:none;background:var(--accent);color:#fff;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit}
+.test-sticky{position:sticky;top:48px;z-index:10;padding:12px 0;background:var(--bg);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);margin-bottom:20px}
+.test-sticky .title{font-weight:700;font-family:'DM Serif Display',serif}
+.test-sticky-right{display:flex;gap:12px;align-items:center}
+.submit-btn{padding:6px 20px;border-radius:99px;border:none;background:var(--green);color:#fff;font-weight:700;cursor:pointer;font-size:13px;font-family:inherit}
+.retake-btn{padding:6px 20px;border-radius:99px;border:none;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;font-size:13px;font-family:inherit}
+.score-box{text-align:center;padding:28px;margin-bottom:24px;border-radius:16px}
+.score-pct{font-size:40px;font-weight:800}
+.score-detail{color:var(--muted);font-size:14px}
+.section-head{font-family:'DM Serif Display',serif;font-size:17px;color:var(--accent);margin-top:24px;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+
+@media(max-width:600px){
+  .overview-wrap{overflow-x:auto}
+  .overview-wrap table{min-width:500px}
+  .conj-card{min-width:100%}
+}
+</style>
+</head>
+<body>
+
+<div class="header"><div class="header-inner">
+  <div class="header-row"><span style="font-size:28px">🇫🇷</span><h1>French 2 — Final Review</h1></div>
+  <p>Avoir/être · futur proche · passé composé · futur simple · imparfait · les parties du corps</p>
+</div></div>
+
+<div class="tab-bar"><div class="tab-bar-inner" id="tabBar">
+  <button class="tab-btn active" data-tab="review">📖 Review</button>
+  <button class="tab-btn" data-tab="tables">📊 Tables</button>
+  <button class="tab-btn" data-tab="flash">🃏 Flashcards</button>
+  <button class="tab-btn" data-tab="practice">✏️ Practice</button>
+  <button class="tab-btn" data-tab="test">📝 Mock Test</button>
+</div></div>
+
+<div class="content">
+  <div id="panel-review" class="tab-panel active"></div>
+  <div id="panel-tables" class="tab-panel"></div>
+  <div id="panel-flash" class="tab-panel"></div>
+  <div id="panel-practice" class="tab-panel"></div>
+  <div id="panel-test" class="tab-panel"></div>
+</div>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────
+const BODY_PARTS=[
+  {fr:"la main",en:"hand"},{fr:"le pied",en:"foot"},{fr:"la jambe",en:"leg"},
+  {fr:"le bras",en:"arm"},{fr:"l'épaule",en:"shoulder"},{fr:"le genou",en:"knee"},
+  {fr:"le menton",en:"chin"},{fr:"la poitrine",en:"chest"},{fr:"la dent",en:"tooth"},
+  {fr:"la joue",en:"cheek"},{fr:"le cerveau",en:"brain"},{fr:"la peau",en:"skin"},
+  {fr:"l'os",en:"bone"},{fr:"le doigt",en:"finger"},{fr:"l'estomac",en:"stomach"},
+  {fr:"le ventre",en:"belly"},{fr:"la langue",en:"tongue"},{fr:"le cœur",en:"heart"},
+  {fr:"la bouche",en:"mouth"},{fr:"le muscle",en:"muscle"},{fr:"le nez",en:"nose"},
+  {fr:"le dos",en:"back"},{fr:"la tête",en:"head"},{fr:"le visage",en:"face"},
+  {fr:"l'œil",en:"eye"},{fr:"l'oreille",en:"ear"},{fr:"les cheveux",en:"hair"},
+  {fr:"le front",en:"forehead"},{fr:"la gorge",en:"throat"},{fr:"le cou",en:"neck"},
+  {fr:"le pouce",en:"thumb"}
+];
+const SUBJECTS=["je","tu","il/elle","nous","vous","ils/elles"];
+const C={
+  avoir_present:{verb:"avoir",tense:"Présent",forms:["ai","as","a","avons","avez","ont"]},
+  etre_present:{verb:"être",tense:"Présent",forms:["suis","es","est","sommes","êtes","sont"]},
+  aller_present:{verb:"aller",tense:"Présent",forms:["vais","vas","va","allons","allez","vont"]},
+  parler_present:{verb:"parler",tense:"Présent",forms:["parle","parles","parle","parlons","parlez","parlent"]},
+  finir_present:{verb:"finir",tense:"Présent",forms:["finis","finis","finit","finissons","finissez","finissent"]},
+  vendre_present:{verb:"vendre",tense:"Présent",forms:["vends","vends","vend","vendons","vendez","vendent"]},
+  parler_pc:{verb:"parler",tense:"Passé Composé",forms:["ai parlé","as parlé","a parlé","avons parlé","avez parlé","ont parlé"]},
+  finir_pc:{verb:"finir",tense:"Passé Composé",forms:["ai fini","as fini","a fini","avons fini","avez fini","ont fini"]},
+  vendre_pc:{verb:"vendre",tense:"Passé Composé",forms:["ai vendu","as vendu","a vendu","avons vendu","avez vendu","ont vendu"]},
+  mettre_pc:{verb:"mettre",tense:"Passé Composé",forms:["ai mis","as mis","a mis","avons mis","avez mis","ont mis"]},
+  prendre_pc:{verb:"prendre",tense:"Passé Composé",forms:["ai pris","as pris","a pris","avons pris","avez pris","ont pris"]},
+  boire_pc:{verb:"boire",tense:"Passé Composé",forms:["ai bu","as bu","a bu","avons bu","avez bu","ont bu"]},
+  aller_pc:{verb:"aller",tense:"Passé Composé (être)",forms:["suis allé(e)","es allé(e)","est allé(e)","sommes allé(e)s","êtes allé(e)(s)","sont allé(e)s"]},
+  parler_fs:{verb:"parler",tense:"Futur Simple",forms:["parlerai","parleras","parlera","parlerons","parlerez","parleront"]},
+  finir_fs:{verb:"finir",tense:"Futur Simple",forms:["finirai","finiras","finira","finirons","finirez","finiront"]},
+  vendre_fs:{verb:"vendre",tense:"Futur Simple",forms:["vendrai","vendras","vendra","vendrons","vendrez","vendront"]},
+  parler_imp:{verb:"parler",tense:"Imparfait",forms:["parlais","parlais","parlait","parlions","parliez","parlaient"]},
+  finir_imp:{verb:"finir",tense:"Imparfait",forms:["finissais","finissais","finissait","finissions","finissiez","finissaient"]},
+  vendre_imp:{verb:"vendre",tense:"Imparfait",forms:["vendais","vendais","vendait","vendions","vendiez","vendaient"]}
+};
+const ETRE_VERBS=["aller","arriver","descendre","entrer","monter","mourir","naître","partir","passer","rester","retourner","sortir","tomber","venir"];
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function norm(s){return s.toLowerCase().trim().replace(/['']/g,"'").replace(/\s+/g," ").normalize("NFC")}
+function esc(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────
+function conjCard(verb,tense,forms){
+  let rows=SUBJECTS.map((s,i)=>`<tr${i<5?' style="border-bottom:1px solid var(--border)"':''}><td>${esc(s)}</td><td style="font-weight:600">${esc(forms[i])}</td></tr>`).join("");
+  return`<div class="conj-card"><div class="conj-header"><span class="verb">${esc(verb)}</span><span class="badge">${esc(tense)}</span></div><table>${rows}</table></div>`;
+}
+function conjCards(keys){return`<div class="conj-row">${keys.map(k=>conjCard(C[k].verb,C[k].tense,C[k].forms)).join("")}</div>`}
+function tip(html){return`<div class="tip"><span style="font-size:16px">💡</span><span>${html}</span></div>`}
+function section(title,body){return`<div class="section"><h3>${title}</h3><div class="body">${body}</div></div>`}
+
+// ─── TAB: REVIEW ──────────────────────────────────────────────────────────
+function renderReview(){
+  const ovRows=[
+    {t:"Présent",er:"je touche",ir:"je finis",re:"je vends",d:"Right now"},
+    {t:"Passé Composé",er:"j'ai touché",ir:"j'ai fini",re:"j'ai vendu",d:"Completed past"},
+    {t:"Imparfait",er:"je touchais",ir:"je finissais",re:"je vendais",d:"Ongoing/habitual past"},
+    {t:"Futur Proche",er:"je vais toucher",ir:"je vais finir",re:"je vais vendre",d:"Going to (near future)"},
+    {t:"Futur Simple",er:"je toucherai",ir:"je finirai",re:"je vendrai",d:"Will (simple future)"}
+  ];
+  function hl(s){return s.replace(/(je|j'ai|je vais)\s*/g,m=>`<span class="hl-subj">${m}</span>`).replace(/(?:(?<=<\/span>)|^)([a-zéèêàùûôîïüë]+)$/i,(m,v)=>`<span class="hl-verb">${v}</span>`).replace(/([a-zéèêàùûôîïüë]+)$/i,m=>`<span class="hl-verb">${m}</span>`)}
+  // simpler highlight: split last word
+  function hlV(s){const p=s.split(" ");if(p.length===1)return`<span class="hl-verb">${esc(s)}</span>`;const last=p.pop();return`<span class="hl-subj">${esc(p.join(" "))} </span><span class="hl-verb">${esc(last)}</span>`}
+
+  const ovTbody=ovRows.map(r=>`<tr><td><div class="ov-tense">${esc(r.t)}</div><div class="ov-desc">${esc(r.d)}</div></td><td>${hlV(r.er)}</td><td>${hlV(r.ir)}</td><td>${hlV(r.re)}</td></tr>`).join("");
+
+  return`
+  <div style="max-width:720px">
+    <div style="margin-bottom:36px">
+      <h3 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:6px;border-bottom:2px solid var(--gold);padding-bottom:6px;display:inline-block;color:var(--gold)">⚡ Quick Overview — All 5 Tenses at a Glance</h3>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">One table to see every tense side-by-side. Master this and you've got the whole test mapped out.</p>
+      <div class="overview-wrap"><table><thead><tr><th>Tense</th><th>-ER (toucher)</th><th>-IR (finir)</th><th>-RE (vendre)</th></tr></thead><tbody>${ovTbody}</tbody></table></div>
+      <div class="cheat"><div class="title">🔑 Formation Cheat Sheet</div>
+        <div><strong>Présent:</strong> stem + tense endings (-e/-es/-e/-ons/-ez/-ent for -ER)</div>
+        <div><strong>Passé Composé:</strong> avoir/être (present) + past participle (-é / -i / -u)</div>
+        <div><strong>Imparfait:</strong> nous-present stem + <code>-ais, -ais, -ait, -ions, -iez, -aient</code></div>
+        <div><strong>Futur Proche:</strong> aller (present) + infinitive</div>
+        <div><strong>Futur Simple:</strong> infinitive (drop -e for -RE) + <code>-ai, -as, -a, -ons, -ez, -ont</code></div>
+      </div>
+    </div>
+
+    ${section("1. Avoir & Être — Présent",`
+      <p>These are the two most important verbs in French. You need them for everything — especially passé composé.</p>
+      ${conjCards(["avoir_present","etre_present"])}
+      ${tip("Mnemonic for être: <strong>S</strong>uis, e<strong>S</strong>, es<strong>T</strong> — <strong>S</strong>ommes, ê<strong>T</strong>es, son<strong>T</strong>. The consonants S-S-T-S-T-T.")}
+    `)}
+    ${section("2. Futur Proche (aller + infinitif)",`
+      <p>To say what you're <em>going to do</em>, conjugate <strong>aller</strong> in present tense + the infinitive of the action verb.</p>
+      ${conjCards(["aller_present"])}
+      <p style="margin-top:12px">Examples: <em>je <strong>vais manger</strong></em> (I'm going to eat), <em>nous <strong>allons travailler</strong></em> (we're going to work), <em>il <strong>va voter</strong></em> (he's going to vote).</p>
+      ${tip("Futur proche = present tense of ALLER + infinitive. That's it. No conjugation on the second verb!")}
+    `)}
+    ${section("3. Passé Composé",`
+      <p>Two parts: <strong>auxiliary</strong> (avoir or être in present) + <strong>past participle</strong>.</p>
+      <p style="margin-top:8px"><strong>Regular past participles:</strong></p>
+      <ul style="padding-left:20px;margin:4px 0"><li>-ER → -é (parler → parlé)</li><li>-IR → -i (finir → fini)</li><li>-RE → -u (vendre → vendu)</li></ul>
+      <p style="margin-top:8px"><strong>3 irregular ones for the test:</strong></p>
+      <ul style="padding-left:20px;margin:4px 0"><li>mettre → <strong>mis</strong> (j'ai mis)</li><li>prendre → <strong>pris</strong> (j'ai pris)</li><li>boire → <strong>bu</strong> (j'ai bu)</li></ul>
+      ${tip("<strong>Être verbs</strong> (DR MRS VANDERTRAMP): "+ETRE_VERBS.join(", ")+". With être, the past participle agrees in gender/number with the subject!")}
+      ${conjCards(["mettre_pc","prendre_pc","boire_pc","aller_pc"])}
+    `)}
+    ${section("4. Futur Simple",`
+      <p><strong>Stem:</strong> the infinitive (for -RE verbs, drop the final -e).</p>
+      <p><strong>Endings</strong> (same for all groups): <code style="color:var(--accent)">-ai, -as, -a, -ons, -ez, -ont</code></p>
+      ${tip("Notice the futur simple endings look like avoir in present tense: ai, as, a, (av)ons, (av)ez, ont!")}
+      ${conjCards(["parler_fs","finir_fs","vendre_fs"])}
+    `)}
+    ${section("5. Imparfait",`
+      <p><strong>Stem:</strong> take the <em>nous</em> form of the present tense, drop <em>-ons</em>.</p>
+      <p><strong>Endings:</strong> <code style="color:var(--accent)">-ais, -ais, -ait, -ions, -iez, -aient</code></p>
+      ${tip("All imparfait endings have the letters <strong>ai</strong> in them (except nous/vous which add i → -ions, -iez). And 3 of them sound identical: -ais, -ais, -ait.")}
+      ${conjCards(["parler_imp","finir_imp","vendre_imp"])}
+    `)}
+    ${section("6. Les Parties du Corps",`
+      <div class="body-grid">${BODY_PARTS.map(bp=>`<div class="body-item"><span class="fr">${esc(bp.fr)}</span><span class="en">${esc(bp.en)}</span></div>`).join("")}</div>
+    `)}
+  </div>`;
+}
+
+// ─── TAB: TABLES ──────────────────────────────────────────────────────────
+function renderTables(){
+  const groups={
+    "Présent":["avoir_present","etre_present","aller_present","parler_present","finir_present","vendre_present"],
+    "Passé Composé":["parler_pc","finir_pc","vendre_pc","mettre_pc","prendre_pc","boire_pc","aller_pc"],
+    "Futur Simple":["parler_fs","finir_fs","vendre_fs"],
+    "Imparfait":["parler_imp","finir_imp","vendre_imp"]
+  };
+  const fpVerbs=[
+    {verb:"manger",forms:["vais manger","vas manger","va manger","allons manger","allez manger","vont manger"]},
+    {verb:"travailler",forms:["vais travailler","vas travailler","va travailler","allons travailler","allez travailler","vont travailler"]},
+    {verb:"finir",forms:["vais finir","vas finir","va finir","allons finir","allez finir","vont finir"]}
+  ];
+  let h="";
+  for(const[label,keys]of Object.entries(groups)){
+    h+=`<div style="margin-bottom:36px"><h3 style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:14px;color:var(--accent)">${label}</h3>${conjCards(keys)}</div>`;
+  }
+  h+=`<div style="margin-bottom:36px"><h3 style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:14px;color:var(--accent)">Futur Proche</h3><div class="conj-row">${fpVerbs.map(fp=>conjCard("aller + "+fp.verb,"Futur Proche",fp.forms)).join("")}</div></div>`;
+  return h;
+}
+
+// ─── TAB: FLASHCARDS ──────────────────────────────────────────────────────
+let fcState={mode:"body",cards:[],idx:0,flipped:false,correct:0,wrong:0};
+function fcGenBody(){return shuffle(BODY_PARTS).map(bp=>({front:bp.en,back:bp.fr,type:"body"}))}
+function fcGenConj(){const out=[];for(const c of Object.values(C)){const si=Math.floor(Math.random()*6);out.push({front:c.verb+" ("+c.tense+")\n"+SUBJECTS[si],back:c.forms[si],type:"conj"})}return shuffle(out)}
+function fcReset(mode){fcState={mode,cards:mode==="body"?fcGenBody():fcGenConj(),idx:0,flipped:false,correct:0,wrong:0};renderFlash()}
+function fcFlip(){fcState.flipped=true;renderFlash()}
+function fcAdvance(correct){fcState[correct?"correct":"wrong"]++;fcState.flipped=false;fcState.idx++;renderFlash()}
+function renderFlash(){
+  const s=fcState;const done=s.idx>=s.cards.length;const cur=s.cards[s.idx];
+  let h=`<div class="fc-center">
+    <div class="fc-modes">
+      <button class="fc-mode-btn${s.mode==="body"?" active":""}" onclick="fcReset('body')">Body Parts</button>
+      <button class="fc-mode-btn${s.mode==="conj"?" active":""}" onclick="fcReset('conj')">Conjugations</button>
+    </div>
+    <div class="fc-info"><span>Card ${Math.min(s.idx+1,s.cards.length)} / ${s.cards.length}</span><span><span style="color:var(--green)">✓ ${s.correct}</span> · <span style="color:var(--red)">✗ ${s.wrong}</span></span></div>`;
+  if(done){
+    const pct=Math.round(s.correct/(s.correct+s.wrong)*100);
+    h+=`<div class="fc-done"><div style="font-size:48px;margin-bottom:12px">🎉</div><div style="font-size:22px;font-weight:700;margin-bottom:8px">Terminé !</div><div style="font-size:15px;color:var(--muted);margin-bottom:20px">${s.correct} / ${s.correct+s.wrong} correct (${pct}%)</div><button class="fc-restart" onclick="fcReset('${s.mode}')">Recommencer</button></div>`;
+  } else if(cur){
+    h+=`<div class="fc-card${s.flipped?" flipped":""}" onclick="if(!fcState.flipped)fcFlip()">
+      <div class="fc-label">${s.flipped?"Answer":"Question"} · tap to flip</div>
+      <div class="fc-text" style="font-size:${cur.type==="conj"&&!s.flipped?16:28}px;color:${s.flipped?"var(--accent)":"var(--text)"}">${esc(s.flipped?cur.back:cur.front)}</div>
+    </div>`;
+    if(s.flipped) h+=`<div class="fc-actions"><button class="fc-wrong" onclick="fcAdvance(false)">✗ Incorrect</button><button class="fc-right" onclick="fcAdvance(true)">✓ Correct</button></div>`;
+  }
+  h+=`</div>`;
+  document.getElementById("panel-flash").innerHTML=h;
+}
+
+// ─── TAB: PRACTICE ────────────────────────────────────────────────────────
+let practiceQs=[], practiceAns={}, practiceChecked={};
+function genPractice(){
+  const qs=[];const keys=Object.keys(C);
+  for(let i=0;i<8;i++){const k=keys[Math.floor(Math.random()*keys.length)];const c=C[k];const si=Math.floor(Math.random()*6);qs.push({type:"fill",prompt:`Conjugate «${c.verb}» in ${c.tense} for "${SUBJECTS[si]}":`,answer:c.forms[si]})}
+  shuffle(BODY_PARTS).slice(0,6).forEach(bp=>{if(Math.random()>.5)qs.push({type:"fill",prompt:`Translate to French: "${bp.en}"`,answer:bp.fr});else qs.push({type:"fill",prompt:`Translate to English: "${bp.fr}"`,answer:bp.en})});
+  qs.push({type:"mc",prompt:'Which auxiliary does "aller" use in passé composé?',options:["avoir","être"],answer:"être"});
+  qs.push({type:"mc",prompt:'What is the past participle of "boire"?',options:["bu","boi","boiré","boire"],answer:"bu"});
+  qs.push({type:"mc",prompt:"What are the futur simple endings?",options:["-ai, -as, -a, -ons, -ez, -ont","-e, -es, -e, -ons, -ez, -ent","-ais, -ais, -ait, -ions, -iez, -aient"],answer:"-ai, -as, -a, -ons, -ez, -ont"});
+  qs.push({type:"mc",prompt:"How do you form the imparfait stem?",options:["Infinitive of the verb","Nous form of présent minus -ons","Past participle plus ending"],answer:"Nous form of présent minus -ons"});
+  return shuffle(qs);
+}
+function resetPractice(){practiceQs=genPractice();practiceAns={};practiceChecked={};renderPractice()}
+function checkPractice(i){const q=practiceQs[i];practiceChecked[i]=norm(practiceAns[i]||"")===norm(q.answer);renderPractice()}
+function mcPractice(i,opt){if(practiceChecked[i]!==undefined)return;practiceAns[i]=opt;practiceChecked[i]=opt===practiceQs[i].answer;renderPractice()}
+function practiceInput(i,val){practiceAns[i]=val}
+function renderPractice(){
+  let h=`<div style="max-width:640px"><div class="top-row"><span style="color:var(--muted);font-size:13px">${practiceQs.length} questions · type your answers and check</span><button class="regen-btn" onclick="resetPractice()">🔄 New Set</button></div>`;
+  practiceQs.forEach((q,i)=>{
+    const chk=practiceChecked[i]!==undefined;const ok=practiceChecked[i];
+    h+=`<div class="q-card${chk?(ok?" correct-border":" wrong-border"):""}"><div class="q-prompt"><span class="q-num">Q${i+1}.</span>${esc(q.prompt)}</div>`;
+    if(q.type==="fill"){
+      h+=`<div class="q-input-row"><input class="q-input" id="pi${i}" value="${esc(practiceAns[i]||"")}" oninput="practiceInput(${i},this.value)" onkeydown="if(event.key==='Enter')checkPractice(${i})" placeholder="Your answer..."${chk?" disabled":""}/>`;
+      if(!chk) h+=`<button class="q-check-btn" onclick="checkPractice(${i})">Check</button>`;
+      h+=`</div>`;
+    } else {
+      h+=`<div class="mc-options">${q.options.map(o=>{
+        const sel=practiceAns[i]===o;const right=o===q.answer;
+        let cls="mc-btn";if(chk){if(right)cls+=" right";else if(sel)cls+=" wrong-sel"}else if(sel)cls+=" selected";
+        return`<button class="${cls}" onclick="mcPractice(${i},'${esc(o)}')">${esc(o)}</button>`;
+      }).join("")}</div>`;
+    }
+    if(chk&&!ok) h+=`<div class="q-wrong">Correct answer: <span class="q-answer">${esc(q.answer)}</span></div>`;
+    if(chk&&ok) h+=`<div class="q-correct">✓ Correct!</div>`;
+    h+=`</div>`;
+  });
+  h+=`</div>`;
+  document.getElementById("panel-practice").innerHTML=h;
+}
+
+// ─── TAB: MOCK TEST ───────────────────────────────────────────────────────
+let testQs=[],testAns={},testSubmitted=false,testTimer=0,testInterval=null,testStarted=false;
+const SEC_NAMES={A:"Avoir & Être",B:"Futur Proche",C:"Passé Composé",D:"Futur Simple",E:"Vocabulaire — Corps",F:"Questions à choix multiples"};
+function genTest(){
+  const qs=[];
+  ["avoir_present","etre_present"].forEach(k=>{const c=C[k];for(let x=0;x<2;x++){const si=Math.floor(Math.random()*6);qs.push({sec:"A",prompt:`${SUBJECTS[si]} ______ (${c.verb}, présent)`,answer:c.forms[si]})}});
+  ["danser","choisir","attendre"].forEach(v=>{const si=Math.floor(Math.random()*6);qs.push({sec:"B",prompt:`${SUBJECTS[si]} ______ ______ (${v}, futur proche)`,answer:C.aller_present.forms[si]+" "+v})});
+  ["parler_pc","finir_pc","vendre_pc","mettre_pc","prendre_pc","boire_pc"].forEach(k=>{const c=C[k];const si=Math.floor(Math.random()*6);qs.push({sec:"C",prompt:`${SUBJECTS[si]} ______ (${c.verb}, passé composé)`,answer:c.forms[si]})});
+  ["parler_fs","finir_fs","vendre_fs"].forEach(k=>{const c=C[k];const si=Math.floor(Math.random()*6);qs.push({sec:"D",prompt:`${SUBJECTS[si]} ______ (${c.verb}, futur simple)`,answer:c.forms[si]})});
+  shuffle(BODY_PARTS).slice(0,6).forEach(bp=>{if(Math.random()>.5)qs.push({sec:"E",prompt:`English → French: "${bp.en}"`,answer:bp.fr});else qs.push({sec:"E",prompt:`French → English: "${bp.fr}"`,answer:bp.en})});
+  qs.push({sec:"F",type:"mc",prompt:'Quel auxiliaire utilise le verbe "partir" au passé composé ?',options:["avoir","être"],answer:"être"});
+  qs.push({sec:"F",type:"mc",prompt:"Le participe passé de «mettre» est :",options:["metté","mis","mettu","mettis"],answer:"mis"});
+  return qs;
+}
+function fmtTime(s){return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function startTest(){testQs=genTest();testAns={};testSubmitted=false;testTimer=0;testStarted=true;if(testInterval)clearInterval(testInterval);testInterval=setInterval(()=>{testTimer++;document.getElementById("testTimer")&&(document.getElementById("testTimer").textContent="⏱ "+fmtTime(testTimer))},1000);renderTest()}
+function submitTest(){testSubmitted=true;if(testInterval)clearInterval(testInterval);renderTest()}
+function testInput(i,val){testAns[i]=val}
+function testMC(i,opt){if(testSubmitted)return;testAns[i]=opt;renderTest()}
+function renderTest(){
+  const el=document.getElementById("panel-test");
+  if(!testStarted){el.innerHTML=`<div class="test-start"><div style="font-size:48px;margin-bottom:16px">📝</div><h2 style="font-family:'DM Serif Display',serif;font-size:26px;margin-bottom:8px">Test Final — French 2</h2><p style="color:var(--muted);margin-bottom:24px;font-size:14px">${24} questions · timed · covers all grammar + vocabulary</p><button class="test-start-btn" onclick="startTest()">Commencer le test</button></div>`;return}
+  let correct=0;if(testSubmitted)testQs.forEach((q,i)=>{if(norm(testAns[i]||"")===norm(q.answer))correct++});
+  const pct=testQs.length?Math.round(correct/testQs.length*100):0;
+  let h=`<div style="max-width:640px"><div class="test-sticky"><span class="title">${testSubmitted?"Résultats":"Test en cours..."}</span><div class="test-sticky-right"><span class="badge" style="color:var(--gold);background:var(--goldDim)" id="testTimer">⏱ ${fmtTime(testTimer)}</span>`;
+  if(!testSubmitted) h+=`<button class="submit-btn" onclick="submitTest()">Soumettre</button>`;
+  else h+=`<button class="retake-btn" onclick="startTest()">Reprendre</button>`;
+  h+=`</div></div>`;
+
+  if(testSubmitted){
+    const col=pct>=80?"green":pct>=60?"gold":"red";
+    h+=`<div class="score-box" style="background:var(--${col}Dim);border:1px solid var(--${col})44"><div class="score-pct" style="color:var(--${col})">${pct}%</div><div class="score-detail">${correct} / ${testQs.length} correct · ${fmtTime(testTimer)}</div></div>`;
+  }
+
+  let curSec="";
+  testQs.forEach((q,i)=>{
+    if(q.sec!==curSec){curSec=q.sec;h+=`<h3 class="section-head">Section ${q.sec}: ${SEC_NAMES[q.sec]}</h3>`}
+    const chk=testSubmitted;const ok=chk&&norm(testAns[i]||"")===norm(q.answer);
+    h+=`<div class="q-card${chk?(ok?" correct-border":" wrong-border"):""}"><div class="q-prompt"><span class="q-num">${i+1}.</span> ${esc(q.prompt)}</div>`;
+    if(q.type==="mc"){
+      h+=`<div class="mc-options">${q.options.map(o=>{
+        const sel=testAns[i]===o;const right=o===q.answer;
+        let cls="mc-btn";if(chk){if(right)cls+=" right";else if(sel)cls+=" wrong-sel"}else if(sel)cls+=" selected";
+        return`<button class="${cls}" onclick="testMC(${i},'${esc(o)}')">${esc(o)}</button>`;
+      }).join("")}</div>`;
+    } else {
+      h+=`<input class="q-input" id="ti${i}" value="${esc(testAns[i]||"")}" oninput="testInput(${i},this.value)" placeholder="..."${chk?" disabled":""}/>`;
+    }
+    if(chk&&!ok) h+=`<div class="q-wrong" style="margin-top:6px;font-size:12px">→ <span class="q-answer">${esc(q.answer)}</span></div>`;
+    h+=`</div>`;
+  });
+  h+=`</div>`;
+  el.innerHTML=h;
+}
+
+// ─── TAB SWITCHING ────────────────────────────────────────────────────────
+const tabs=document.querySelectorAll(".tab-btn");
+const panels=document.querySelectorAll(".tab-panel");
+let initialized={};
+
+function switchTab(id){
+  tabs.forEach(t=>{t.classList.toggle("active",t.dataset.tab===id)});
+  panels.forEach(p=>{p.classList.toggle("active",p.id==="panel-"+id)});
+  if(!initialized[id]){
+    initialized[id]=true;
+    if(id==="review") document.getElementById("panel-review").innerHTML=renderReview();
+    if(id==="tables") document.getElementById("panel-tables").innerHTML=renderTables();
+    if(id==="flash") fcReset("body");
+    if(id==="practice") resetPractice();
+    if(id==="test") renderTest();
+  }
+}
+tabs.forEach(t=>t.addEventListener("click",()=>switchTab(t.dataset.tab)));
+
+// Init
+switchTab("review");
+</script>
+</body>
+</html>
